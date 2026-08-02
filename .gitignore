@@ -1,0 +1,3 @@
+nextcloud-backup/*
+volume-nextcloud/*
+*.tar*
