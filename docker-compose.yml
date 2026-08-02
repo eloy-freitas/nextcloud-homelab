@@ -1,0 +1,35 @@
+services:
+  nextcloud:
+    image: nextcloud:34.0.1-apache
+    container_name: nextcloud
+    restart: on-failure
+    ports:
+      - 8080:80 # Exposes Nextcloud on port 8080 of your host
+    environment:
+      MYSQL_HOST: db
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD: ${ROOT_PASSWORD}
+    volumes:
+      - ${VOLUME_ROOT}/nextcloud_html:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.6
+    container_name: nextcloud_db
+    restart: on-failure
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_DATABASE: nextcloud
+      MYSQL_USER: nextcloud
+      MYSQL_PASSWORD: ${ROOT_PASSWORD}
+    volumes:
+      - ${VOLUME_ROOT}/nextcloud_db_data:/var/lib/mysql
+
+volumes:
+  nextcloud_html:
+  nextcloud_db_data:
+
