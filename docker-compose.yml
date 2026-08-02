@@ -4,7 +4,7 @@ services:
     container_name: nextcloud
     restart: on-failure
     ports:
-      - 8080:80 # Exposes Nextcloud on port 8080 of your host
+      - 8080:80
     environment:
       MYSQL_HOST: db
       MYSQL_DATABASE: nextcloud
@@ -12,6 +12,7 @@ services:
       MYSQL_PASSWORD: ${ROOT_PASSWORD}
     volumes:
       - ${VOLUME_ROOT}/nextcloud_html:/var/www/html
+      - ./config/nextcloud/config:/var/www/html/config
     depends_on:
       - db
 
